@@ -1,4 +1,4 @@
-import { spareParts, inventoryMovements } from '$stores';
+import { spareParts, inventoryMovements, warehouseLocations } from '$stores';
 import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
@@ -30,6 +30,7 @@ export const load: PageLoad = async ({ params }) => {
 			totalOut,
 			totalValue,
 			turnoverRate: totalOut > 0 ? (totalOut / (totalIn || 1)) * 100 : 0
-		}
+		},
+		warehouseLocations: warehouseLocations.getAll()
 	};
 };

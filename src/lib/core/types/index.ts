@@ -49,6 +49,74 @@ export interface Asset {
 	updatedAt: string;
 }
 
+export type InspectionStatus = 'Passed' | 'Failed' | 'Needs Attention' | 'Pending';
+
+export interface AssetInspection {
+	id: string;
+	assetId: string;
+	assetName?: string; // Denormalized for display
+	inspectionDate: string;
+	inspectedBy: string;
+	status: InspectionStatus;
+	checklistItems: InspectionChecklistItem[];
+	photos: InspectionPhoto[];
+	findings: string;
+	recommendations?: string;
+	nextInspectionDate?: string;
+	createdAt: string;
+	updatedAt: string;
+}
+
+export interface InspectionChecklistItem {
+	id: string;
+	item: string;
+	status: 'OK' | 'Not OK' | 'N/A';
+	notes?: string;
+}
+
+export interface InspectionPhoto {
+	id: string;
+	url: string;
+	caption?: string;
+	uploadedAt: string;
+}
+
+export type DocumentType = 'Manual' | 'Certificate' | 'Warranty' | 'Drawing' | 'Photo' | 'Condition Report' | 'Maintenance Record' | 'Other';
+
+export interface AssetDocument {
+	id: string;
+	assetId: string;
+	assetName?: string; // Denormalized for display
+	title: string;
+	description?: string;
+	type: DocumentType;
+	fileUrl: string;
+	fileName: string;
+	fileSize: number; // in bytes
+	mimeType: string;
+	uploadedBy: string;
+	tags?: string[];
+	expiryDate?: string; // For certificates, warranties, etc.
+	version?: string;
+	relatedWorkOrderId?: string; // Link to maintenance work order
+	assetConditionScore?: number; // 1-10 scale for condition tracking
+	capturedDate?: string; // For photos/condition reports
+	createdAt: string;
+	updatedAt: string;
+}
+
+export interface AssetDocumentationSummary {
+	assetId: string;
+	totalDocuments: number;
+	totalMaintenanceRecords: number;
+	totalPhotos: number;
+	conditionTrend: 'improving' | 'stable' | 'declining';
+	firstDocumentDate: string;
+	lastDocumentDate: string;
+	averageConditionScore?: number;
+	documentsByType: Record<DocumentType, number>;
+}
+
 export interface FleetVehicle {
 	id: string;
 	assetId: string;
@@ -123,6 +191,26 @@ export interface MaintenancePlan {
 
 // ===== Inventory & Spare Parts =====
 
+export type WarehouseLocationType = 'CENTRAL' | 'SITE';
+
+export interface WarehouseLocation {
+	id: string;
+	code: string;
+	name: string;
+	type: WarehouseLocationType;
+	region?: string; // For CENTRAL warehouses
+	factory?: string; // For SITE warehouses
+	address: string;
+	city: string;
+	country: string;
+	isActive: boolean;
+	capacity?: number;
+	manager?: string;
+	phone?: string;
+	createdAt: string;
+	updatedAt: string;
+}
+
 export interface SparePart {
 	id: string;
 	code: string;
@@ -132,7 +220,9 @@ export interface SparePart {
 	currentStock: number;
 	minStock: number;
 	maxStock?: number;
-	warehouse: string;
+	warehouse: string; // Deprecated: kept for backward compatibility
+	warehouseLocationId: string; // Link to WarehouseLocation
+	warehouseLocationName?: string; // Denormalized for display
 	unitCost: number;
 	sapItemCode?: string; // Link to SAP B1
 	supplier?: string;
@@ -152,7 +242,9 @@ export interface InventoryMovement {
 	unitCost: number;
 	totalCost: number;
 	referenceWorkOrderId?: string;
-	warehouse: string;
+	warehouse: string; // Deprecated: kept for backward compatibility
+	warehouseLocationId?: string; // Link to WarehouseLocation
+	warehouseLocationName?: string; // Denormalized for display
 	performedBy: string;
 	notes?: string;
 	createdAt: string;

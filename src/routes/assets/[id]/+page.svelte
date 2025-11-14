@@ -104,6 +104,18 @@
 			>
 				Cost & Depreciation
 			</button>
+			<a
+				href="/assets/{data.asset.id}/inspections"
+				class="border-b-2 border-transparent px-1 py-4 text-sm font-medium text-slate-500 hover:border-slate-300 hover:text-slate-700"
+			>
+				Inspections
+			</a>
+			<a
+				href="/assets/{data.asset.id}/documents"
+				class="border-b-2 border-transparent px-1 py-4 text-sm font-medium text-slate-500 hover:border-slate-300 hover:text-slate-700"
+			>
+				Documentation
+			</a>
 		</nav>
 	</div>
 

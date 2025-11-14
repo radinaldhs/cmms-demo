@@ -14,9 +14,9 @@ const initialWorkOrders: WorkOrder[] = [
 		status: 'Completed',
 		requestedBy: 'John Smith',
 		assignedTo: 'Mike Johnson',
-		scheduledDate: '2024-01-15',
-		dueDate: '2024-01-15',
-		completedDate: '2024-01-15',
+		scheduledDate: '2025-01-15',
+		dueDate: '2025-01-15',
+		completedDate: '2025-01-15',
 		cost: 850,
 		sparePartsUsed: [
 			{ partId: 'SP001', partCode: 'SEAL-001', partName: 'Mechanical Seal', quantity: 2, unitCost: 125, totalCost: 250 },
@@ -24,8 +24,8 @@ const initialWorkOrders: WorkOrder[] = [
 		],
 		laborHours: 4,
 		notes: 'Completed successfully. All components within normal parameters.',
-		createdAt: '2024-01-10T09:00:00Z',
-		updatedAt: '2024-01-15T16:30:00Z'
+		createdAt: '2025-01-10T09:00:00Z',
+		updatedAt: '2025-01-15T16:30:00Z'
 	},
 	{
 		id: 'WO002',
@@ -37,15 +37,15 @@ const initialWorkOrders: WorkOrder[] = [
 		status: 'In Progress',
 		requestedBy: 'David Wilson',
 		assignedTo: 'Robert Brown',
-		scheduledDate: '2024-02-15',
-		dueDate: '2024-02-15',
+		scheduledDate: '2025-02-15',
+		dueDate: '2025-02-15',
 		cost: 0,
 		sparePartsUsed: [
 			{ partId: 'SP010', partCode: 'FILT-002', partName: 'Air Filter Element', quantity: 1, unitCost: 85, totalCost: 85 }
 		],
 		laborHours: 1,
-		createdAt: '2024-02-10T10:00:00Z',
-		updatedAt: '2024-02-15T09:30:00Z'
+		createdAt: '2025-02-10T10:00:00Z',
+		updatedAt: '2025-02-15T09:30:00Z'
 	},
 	{
 		id: 'WO003',
@@ -57,14 +57,14 @@ const initialWorkOrders: WorkOrder[] = [
 		status: 'Planned',
 		requestedBy: 'Safety Department',
 		assignedTo: 'Expert Services Inc',
-		scheduledDate: '2024-03-01',
-		dueDate: '2024-03-01',
+		scheduledDate: '2025-03-01',
+		dueDate: '2025-03-01',
 		cost: 0,
 		sparePartsUsed: [],
 		laborHours: 8,
 		notes: 'Requires certified inspector. Schedule coordinated with production shutdown.',
-		createdAt: '2024-01-20T11:00:00Z',
-		updatedAt: '2024-01-20T11:00:00Z'
+		createdAt: '2025-01-20T11:00:00Z',
+		updatedAt: '2025-01-20T11:00:00Z'
 	},
 	{
 		id: 'WO004',
@@ -76,14 +76,14 @@ const initialWorkOrders: WorkOrder[] = [
 		status: 'Overdue',
 		requestedBy: 'Production Manager',
 		assignedTo: 'Mike Johnson',
-		scheduledDate: '2024-02-05',
-		dueDate: '2024-02-05',
+		scheduledDate: '2025-02-05',
+		dueDate: '2025-02-05',
 		cost: 0,
 		sparePartsUsed: [],
 		laborHours: 2,
 		notes: 'Belt showing signs of slipping. Needs immediate attention.',
-		createdAt: '2024-02-01T08:00:00Z',
-		updatedAt: '2024-02-05T10:00:00Z'
+		createdAt: '2025-02-01T08:00:00Z',
+		updatedAt: '2025-02-05T10:00:00Z'
 	},
 	{
 		id: 'WO005',
@@ -95,15 +95,15 @@ const initialWorkOrders: WorkOrder[] = [
 		status: 'Completed',
 		requestedBy: 'Facilities Manager',
 		assignedTo: 'David Wilson',
-		scheduledDate: '2024-02-01',
-		dueDate: '2024-02-01',
-		completedDate: '2024-02-01',
+		scheduledDate: '2025-02-01',
+		dueDate: '2025-02-01',
+		completedDate: '2025-02-01',
 		cost: 150,
 		sparePartsUsed: [],
 		laborHours: 2,
 		notes: 'Generator performed within specifications. No issues found.',
-		createdAt: '2024-01-25T09:00:00Z',
-		updatedAt: '2024-02-01T14:00:00Z'
+		createdAt: '2025-01-25T09:00:00Z',
+		updatedAt: '2025-02-01T14:00:00Z'
 	},
 	{
 		id: 'WO006',
@@ -115,15 +115,15 @@ const initialWorkOrders: WorkOrder[] = [
 		status: 'Planned',
 		requestedBy: 'Building Manager',
 		assignedTo: 'Robert Brown',
-		scheduledDate: '2024-02-20',
-		dueDate: '2024-02-20',
+		scheduledDate: '2025-02-20',
+		dueDate: '2025-02-20',
 		cost: 0,
 		sparePartsUsed: [
 			{ partId: 'SP011', partCode: 'FILT-003', partName: 'HVAC Filter 20x25', quantity: 8, unitCost: 35, totalCost: 280 }
 		],
 		laborHours: 3,
-		createdAt: '2024-02-12T10:00:00Z',
-		updatedAt: '2024-02-12T10:00:00Z'
+		createdAt: '2025-02-12T10:00:00Z',
+		updatedAt: '2025-02-12T10:00:00Z'
 	},
 	{
 		id: 'WO007',
@@ -135,16 +135,16 @@ const initialWorkOrders: WorkOrder[] = [
 		status: 'In Progress',
 		requestedBy: 'Workshop Supervisor',
 		assignedTo: 'Mike Johnson',
-		scheduledDate: '2024-02-14',
-		dueDate: '2024-02-16',
+		scheduledDate: '2025-02-14',
+		dueDate: '2025-02-16',
 		cost: 0,
 		sparePartsUsed: [
 			{ partId: 'SP020', partCode: 'BEAR-003', partName: 'Spindle Bearing Set', quantity: 1, unitCost: 850, totalCost: 850 }
 		],
 		laborHours: 6,
 		notes: 'Machine down. Priority repair to minimize production impact.',
-		createdAt: '2024-02-13T14:00:00Z',
-		updatedAt: '2024-02-14T11:00:00Z'
+		createdAt: '2025-02-13T14:00:00Z',
+		updatedAt: '2025-02-14T11:00:00Z'
 	},
 	{
 		id: 'WO008',
@@ -156,15 +156,15 @@ const initialWorkOrders: WorkOrder[] = [
 		status: 'Completed',
 		requestedBy: 'Warehouse Manager',
 		assignedTo: 'Robert Brown',
-		scheduledDate: '2024-02-08',
-		dueDate: '2024-02-08',
-		completedDate: '2024-02-08',
+		scheduledDate: '2025-02-08',
+		dueDate: '2025-02-08',
+		completedDate: '2025-02-08',
 		cost: 120,
 		sparePartsUsed: [],
 		laborHours: 1,
 		notes: 'Battery in good condition. Added distilled water.',
-		createdAt: '2024-02-05T09:00:00Z',
-		updatedAt: '2024-02-08T11:30:00Z'
+		createdAt: '2025-02-05T09:00:00Z',
+		updatedAt: '2025-02-08T11:30:00Z'
 	},
 	{
 		id: 'WO009',
@@ -176,8 +176,8 @@ const initialWorkOrders: WorkOrder[] = [
 		status: 'Planned',
 		requestedBy: 'Fleet Manager',
 		assignedTo: 'Service Center A',
-		scheduledDate: '2024-02-18',
-		dueDate: '2024-02-18',
+		scheduledDate: '2025-02-18',
+		dueDate: '2025-02-18',
 		cost: 0,
 		sparePartsUsed: [
 			{ partId: 'SP025', partCode: 'OIL-001', partName: 'Engine Oil 15W40 (20L)', quantity: 1, unitCost: 185, totalCost: 185 },
@@ -185,8 +185,8 @@ const initialWorkOrders: WorkOrder[] = [
 			{ partId: 'SP027', partCode: 'FILT-006', partName: 'Air Filter', quantity: 1, unitCost: 65, totalCost: 65 }
 		],
 		laborHours: 2,
-		createdAt: '2024-02-10T13:00:00Z',
-		updatedAt: '2024-02-10T13:00:00Z'
+		createdAt: '2025-02-10T13:00:00Z',
+		updatedAt: '2025-02-10T13:00:00Z'
 	},
 	{
 		id: 'WO010',
@@ -198,14 +198,14 @@ const initialWorkOrders: WorkOrder[] = [
 		status: 'Overdue',
 		requestedBy: 'Maintenance Supervisor',
 		assignedTo: 'David Wilson',
-		scheduledDate: '2024-02-10',
-		dueDate: '2024-02-10',
+		scheduledDate: '2025-02-10',
+		dueDate: '2025-02-10',
 		cost: 0,
 		sparePartsUsed: [],
 		laborHours: 2,
 		notes: 'Chiller efficiency has decreased. Suspected refrigerant leak.',
-		createdAt: '2024-02-05T10:00:00Z',
-		updatedAt: '2024-02-10T09:00:00Z'
+		createdAt: '2025-02-05T10:00:00Z',
+		updatedAt: '2025-02-10T09:00:00Z'
 	},
 	{
 		id: 'WO011',
@@ -217,17 +217,17 @@ const initialWorkOrders: WorkOrder[] = [
 		status: 'Completed',
 		requestedBy: 'Production Supervisor',
 		assignedTo: 'Mike Johnson',
-		scheduledDate: '2024-02-12',
-		dueDate: '2024-02-12',
-		completedDate: '2024-02-12',
+		scheduledDate: '2025-02-12',
+		dueDate: '2025-02-12',
+		completedDate: '2025-02-12',
 		cost: 95,
 		sparePartsUsed: [
 			{ partId: 'SP030', partCode: 'WELD-001', partName: 'Welding Torch Tips (Set)', quantity: 1, unitCost: 95, totalCost: 95 }
 		],
 		laborHours: 1,
 		notes: 'Tips replaced. Weld quality improved.',
-		createdAt: '2024-02-10T11:00:00Z',
-		updatedAt: '2024-02-12T15:00:00Z'
+		createdAt: '2025-02-10T11:00:00Z',
+		updatedAt: '2025-02-12T15:00:00Z'
 	},
 	{
 		id: 'WO012',
@@ -239,8 +239,8 @@ const initialWorkOrders: WorkOrder[] = [
 		status: 'In Progress',
 		requestedBy: 'Driver Report',
 		assignedTo: 'Service Center B',
-		scheduledDate: '2024-02-14',
-		dueDate: '2024-02-15',
+		scheduledDate: '2025-02-14',
+		dueDate: '2025-02-15',
 		cost: 0,
 		sparePartsUsed: [
 			{ partId: 'SP031', partCode: 'BRAKE-001', partName: 'Brake Pad Set Front', quantity: 1, unitCost: 250, totalCost: 250 },
@@ -249,8 +249,8 @@ const initialWorkOrders: WorkOrder[] = [
 		],
 		laborHours: 4,
 		notes: 'Driver reported soft brake pedal. Vehicle in workshop.',
-		createdAt: '2024-02-13T16:00:00Z',
-		updatedAt: '2024-02-14T10:00:00Z'
+		createdAt: '2025-02-13T16:00:00Z',
+		updatedAt: '2025-02-14T10:00:00Z'
 	}
 ];
 

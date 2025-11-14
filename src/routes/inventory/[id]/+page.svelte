@@ -316,7 +316,7 @@
 	bind:open={showEditDialog}
 	part={data.part}
 	categories={spareParts.getCategories()}
-	warehouses={['Main Warehouse', 'Secondary Warehouse', 'Workshop']}
+	warehouseLocations={data.warehouseLocations}
 />
 
 <StockAdjustmentDialog

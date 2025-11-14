@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Dialog, Button, Input, Label, Select, Textarea } from '$components/ui';
+	import { Dialog, Button, Input, Label, Select, Textarea, Badge } from '$components/ui';
 	import { toast } from 'svelte-sonner';
 	import { z } from 'zod';
-	import type { SparePart } from '$types';
+	import type { SparePart, WarehouseLocation } from '$types';
 	import { invalidateAll } from '$app/navigation';
 
 	interface Props {
@@ -10,10 +10,10 @@
 		onClose?: () => void;
 		part?: SparePart | null;
 		categories: string[];
-		warehouses: string[];
+		warehouseLocations: WarehouseLocation[];
 	}
 
-	let { open = $bindable(false), onClose, part = null, categories, warehouses }: Props = $props();
+	let { open = $bindable(false), onClose, part = null, categories, warehouseLocations }: Props = $props();
 
 	let isSubmitting = $state(false);
 	let errors = $state<Record<string, string>>({});
@@ -28,6 +28,7 @@
 		minStock: part?.minStock || 0,
 		maxStock: part?.maxStock || 0,
 		warehouse: part?.warehouse || 'Main Warehouse',
+		warehouseLocationId: part?.warehouseLocationId || (warehouseLocations[0]?.id || ''),
 		unitCost: part?.unitCost || 0,
 		sapItemCode: part?.sapItemCode || '',
 		supplier: part?.supplier || '',
@@ -46,6 +47,7 @@
 				minStock: part.minStock,
 				maxStock: part.maxStock || 0,
 				warehouse: part.warehouse,
+				warehouseLocationId: part.warehouseLocationId,
 				unitCost: part.unitCost,
 				sapItemCode: part.sapItemCode || '',
 				supplier: part.supplier || '',
@@ -61,6 +63,7 @@
 				minStock: 0,
 				maxStock: 0,
 				warehouse: 'Main Warehouse',
+				warehouseLocationId: warehouseLocations[0]?.id || '',
 				unitCost: 0,
 				sapItemCode: '',
 				supplier: '',
@@ -79,10 +82,16 @@
 		minStock: z.number().min(0, 'Min stock cannot be negative'),
 		maxStock: z.number().min(0, 'Max stock cannot be negative'),
 		warehouse: z.string().min(1, 'Warehouse is required'),
+		warehouseLocationId: z.string().min(1, 'Warehouse location is required'),
 		unitCost: z.number().min(0, 'Unit cost must be positive'),
 		sapItemCode: z.string().optional(),
 		supplier: z.string().optional(),
 		leadTimeDays: z.number().min(0, 'Lead time cannot be negative')
+	});
+
+	// Get selected warehouse location details
+	let selectedWarehouse = $derived(() => {
+		return warehouseLocations.find((w) => w.id === formData.warehouseLocationId);
 	});
 
 	async function handleSubmit(e: Event) {
@@ -101,13 +110,20 @@
 				leadTimeDays: Number(formData.leadTimeDays)
 			});
 
+			// Add warehouse location name for denormalization
+			const warehouseLocation = warehouseLocations.find((w) => w.id === validated.warehouseLocationId);
+			const dataToSend = {
+				...validated,
+				warehouseLocationName: warehouseLocation?.name
+			};
+
 			// Call API
 			if (part) {
 				// Update existing part
 				const response = await fetch('/api/inventory', {
 					method: 'PUT',
 					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ id: part.id, ...validated })
+					body: JSON.stringify({ id: part.id, ...dataToSend })
 				});
 
 				if (!response.ok) {
@@ -120,7 +136,7 @@
 				const response = await fetch('/api/inventory', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify(validated)
+					body: JSON.stringify(dataToSend)
 				});
 
 				if (!response.ok) {
@@ -220,24 +236,31 @@
 				/>
 			</div>
 
-			<!-- Warehouse -->
-			<div>
-				<Label for="warehouse">Warehouse *</Label>
-				<Input
-					id="warehouse"
-					bind:value={formData.warehouse}
-					placeholder="e.g., Main Warehouse"
-					list="warehouses"
+			<!-- Warehouse Location -->
+			<div class="md:col-span-2">
+				<Label for="warehouseLocation">Warehouse Location *</Label>
+				<Select
+					id="warehouseLocation"
+					bind:value={formData.warehouseLocationId}
+					options={warehouseLocations.map((loc) => ({
+						value: loc.id,
+						label: `${loc.name} - ${loc.type === 'CENTRAL' ? `Central (${loc.region})` : `Site (${loc.factory})`}`
+					}))}
 					required
-					class={errors.warehouse ? 'border-red-500' : ''}
+					class={errors.warehouseLocationId ? 'border-red-500' : ''}
 				/>
-				<datalist id="warehouses">
-					{#each warehouses as wh}
-						<option value={wh}></option>
-					{/each}
-				</datalist>
-				{#if errors.warehouse}
-					<p class="mt-1 text-xs text-red-600">{errors.warehouse}</p>
+				{#if selectedWarehouse()}
+					<div class="mt-1 flex items-center gap-2">
+						<Badge variant={selectedWarehouse()!.type === 'CENTRAL' ? 'default' : 'secondary'} class="text-xs">
+							{selectedWarehouse()!.type === 'CENTRAL' ? 'Central Warehouse' : 'Site Warehouse'}
+						</Badge>
+						<span class="text-xs text-slate-500">
+							{selectedWarehouse()!.city}, {selectedWarehouse()!.country}
+						</span>
+					</div>
+				{/if}
+				{#if errors.warehouseLocationId}
+					<p class="mt-1 text-xs text-red-600">{errors.warehouseLocationId}</p>
 				{/if}
 			</div>
 

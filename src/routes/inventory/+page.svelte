@@ -15,6 +15,8 @@
 
 	let searchQuery = $state('');
 	let selectedCategory = $state('all');
+	let selectedLocationType = $state<'all' | 'CENTRAL' | 'SITE'>('all');
+	let selectedWarehouseId = $state('all');
 	let showLowStockOnly = $state(false);
 	let showAddDialog = $state(false);
 	let showEditDialog = $state(false);
@@ -44,12 +46,26 @@
 					p.code.toLowerCase().includes(query) ||
 					p.description.toLowerCase().includes(query) ||
 					p.category.toLowerCase().includes(query) ||
-					p.warehouse.toLowerCase().includes(query)
+					p.warehouse.toLowerCase().includes(query) ||
+					(p.warehouseLocationName && p.warehouseLocationName.toLowerCase().includes(query))
 			);
 		}
 
 		if (selectedCategory !== 'all') {
 			filtered = filtered.filter((p) => p.category === selectedCategory);
+		}
+
+		// Filter by location type
+		if (selectedLocationType !== 'all') {
+			filtered = filtered.filter((p) => {
+				const location = data.warehouseLocations.find((loc) => loc.id === p.warehouseLocationId);
+				return location && location.type === selectedLocationType;
+			});
+		}
+
+		// Filter by specific warehouse
+		if (selectedWarehouseId !== 'all') {
+			filtered = filtered.filter((p) => p.warehouseLocationId === selectedWarehouseId);
 		}
 
 		if (showLowStockOnly) {
@@ -62,10 +78,30 @@
 		return filtered;
 	});
 
+	// Get available warehouses based on location type filter
+	let availableWarehouses = $derived(() => {
+		if (selectedLocationType === 'CENTRAL') {
+			return data.centralWarehouses;
+		} else if (selectedLocationType === 'SITE') {
+			return data.siteWarehouses;
+		}
+		return data.warehouseLocations;
+	});
+
+	// Reset warehouse filter when location type changes
+	$effect(() => {
+		selectedLocationType; // Track dependency
+		selectedWarehouseId = 'all';
+	});
+
 	function getStockStatus(part: SparePart): 'low' | 'good' | 'high' {
 		if (part.currentStock < part.minStock) return 'low';
 		if (part.maxStock && part.currentStock > part.maxStock) return 'high';
 		return 'good';
+	}
+
+	function getWarehouseLocation(part: SparePart) {
+		return data.warehouseLocations.find((loc) => loc.id === part.warehouseLocationId);
 	}
 
 	function openEditDialog(part: SparePart) {
@@ -136,7 +172,7 @@
 	{/if}
 
 	<Card class="p-6">
-		<div class="mb-6 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+		<div class="mb-6 grid gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
 			<div class="relative">
 				<Search class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 				<Input bind:value={searchQuery} placeholder="Search inventory..." class="pl-9" />
@@ -150,10 +186,30 @@
 				]}
 			/>
 
+			<Select
+				bind:value={selectedLocationType}
+				options={[
+					{ value: 'all', label: 'All Locations' },
+					{ value: 'CENTRAL', label: 'Central Warehouses' },
+					{ value: 'SITE', label: 'Site Warehouses' }
+				]}
+			/>
+
+			<Select
+				bind:value={selectedWarehouseId}
+				options={[
+					{ value: 'all', label: 'All Warehouses' },
+					...availableWarehouses().map((w) => ({
+						value: w.id,
+						label: w.type === 'CENTRAL' ? `${w.name} (${w.region})` : `${w.name} (${w.factory})`
+					}))
+				]}
+			/>
+
 			<!-- Date Filter -->
 			<DateRangeFilter onFilterChange={handleDateFilterChange} defaultFilter="all_time" />
 
-			<div class="flex items-center gap-2">
+			<div class="flex items-center gap-2 xl:col-span-1">
 				<span class="text-sm text-slate-600">Total Value:</span>
 				<span class="text-lg font-bold text-slate-900">
 					{formatCurrency(filteredParts().reduce((sum, p) => sum + (p.currentStock * p.unitCost), 0))}
@@ -171,12 +227,13 @@
 						<th class="pb-3 text-left text-sm font-semibold text-slate-900">Stock</th>
 						<th class="pb-3 text-left text-sm font-semibold text-slate-900">Min Stock</th>
 						<th class="pb-3 text-left text-sm font-semibold text-slate-900">Unit Cost</th>
-						<th class="pb-3 text-left text-sm font-semibold text-slate-900">Warehouse</th>
+						<th class="pb-3 text-left text-sm font-semibold text-slate-900">Location</th>
 						<th class="pb-3 text-right text-sm font-semibold text-slate-900">Actions</th>
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-slate-100">
 					{#each filteredParts() as part}
+						{@const location = getWarehouseLocation(part)}
 						<tr class="hover:bg-slate-50">
 							<td class="py-4 text-sm font-medium text-slate-900">{part.code}</td>
 							<td class="py-4 text-sm text-slate-900">{part.description}</td>
@@ -193,7 +250,23 @@
 							</td>
 							<td class="py-4 text-sm text-slate-600">{part.minStock} {part.unit}</td>
 							<td class="py-4 text-sm text-slate-900">{formatCurrency(part.unitCost)}</td>
-							<td class="py-4 text-sm text-slate-600">{part.warehouse}</td>
+							<td class="py-4">
+								{#if location}
+									<div class="flex flex-col gap-1">
+										<div class="flex items-center gap-2">
+											<span class="text-sm font-medium text-slate-900">{location.name}</span>
+											<Badge variant={location.type === 'CENTRAL' ? 'default' : 'secondary'} class="text-xs">
+												{location.type === 'CENTRAL' ? 'Central' : 'Site'}
+											</Badge>
+										</div>
+										<span class="text-xs text-slate-500">
+											{location.type === 'CENTRAL' ? location.region : location.factory}
+										</span>
+									</div>
+								{:else}
+									<span class="text-sm text-slate-600">{part.warehouse}</span>
+								{/if}
+							</td>
 							<td class="py-4">
 								<div class="flex items-center justify-end gap-1">
 									<a href="/inventory/{part.id}">
@@ -231,14 +304,14 @@
 <InventoryFormDialog
 	bind:open={showAddDialog}
 	categories={data.categories}
-	warehouses={['Main Warehouse', 'Secondary Warehouse', 'Workshop']}
+	warehouseLocations={data.warehouseLocations}
 />
 
 <InventoryFormDialog
 	bind:open={showEditDialog}
 	part={selectedPart}
 	categories={data.categories}
-	warehouses={['Main Warehouse', 'Secondary Warehouse', 'Workshop']}
+	warehouseLocations={data.warehouseLocations}
 />
 
 <StockAdjustmentDialog

@@ -10,12 +10,12 @@ const initialPlans: MaintenancePlan[] = [
 		type: 'TIME_BASED',
 		intervalDays: 90,
 		taskDescription: 'Quarterly pump maintenance - bearing inspection and seal replacement',
-		nextDueDate: '2024-04-15',
+		nextDueDate: '2025-04-15',
 		isActive: true,
 		estimatedDuration: 4,
 		requiredParts: ['SP001', 'SP015'],
-		createdAt: '2024-01-01T08:00:00Z',
-		updatedAt: '2024-01-01T08:00:00Z'
+		createdAt: '2025-01-01T08:00:00Z',
+		updatedAt: '2025-01-01T08:00:00Z'
 	},
 	{
 		id: 'PLAN002',
@@ -24,12 +24,12 @@ const initialPlans: MaintenancePlan[] = [
 		type: 'TIME_BASED',
 		intervalDays: 30,
 		taskDescription: 'Monthly air filter replacement and oil level check',
-		nextDueDate: '2024-03-15',
+		nextDueDate: '2025-03-15',
 		isActive: true,
 		estimatedDuration: 1,
 		requiredParts: ['SP010'],
-		createdAt: '2024-01-01T08:00:00Z',
-		updatedAt: '2024-01-01T08:00:00Z'
+		createdAt: '2025-01-01T08:00:00Z',
+		updatedAt: '2025-01-01T08:00:00Z'
 	},
 	{
 		id: 'PLAN003',
@@ -38,12 +38,12 @@ const initialPlans: MaintenancePlan[] = [
 		type: 'METER_BASED',
 		intervalMeter: 10000,
 		taskDescription: 'Oil change and general inspection',
-		nextDueDate: '2024-03-20',
+		nextDueDate: '2025-03-20',
 		isActive: true,
 		estimatedDuration: 2,
 		requiredParts: ['SP025', 'SP026', 'SP027'],
-		createdAt: '2024-01-01T08:00:00Z',
-		updatedAt: '2024-01-01T08:00:00Z'
+		createdAt: '2025-01-01T08:00:00Z',
+		updatedAt: '2025-01-01T08:00:00Z'
 	},
 	{
 		id: 'PLAN004',
@@ -52,12 +52,12 @@ const initialPlans: MaintenancePlan[] = [
 		type: 'TIME_BASED',
 		intervalDays: 365,
 		taskDescription: 'Annual boiler inspection and safety certification',
-		nextDueDate: '2024-05-30',
+		nextDueDate: '2025-05-30',
 		isActive: true,
 		estimatedDuration: 8,
 		requiredParts: [],
-		createdAt: '2024-01-01T08:00:00Z',
-		updatedAt: '2024-01-01T08:00:00Z'
+		createdAt: '2025-01-01T08:00:00Z',
+		updatedAt: '2025-01-01T08:00:00Z'
 	},
 	{
 		id: 'PLAN005',
@@ -66,12 +66,12 @@ const initialPlans: MaintenancePlan[] = [
 		type: 'TIME_BASED',
 		intervalDays: 180,
 		taskDescription: 'Semi-annual HVAC filter change and coil cleaning',
-		nextDueDate: '2024-02-20',
+		nextDueDate: '2025-02-20',
 		isActive: false,
 		estimatedDuration: 3,
 		requiredParts: ['SP011'],
-		createdAt: '2024-01-01T08:00:00Z',
-		updatedAt: '2024-01-01T08:00:00Z'
+		createdAt: '2025-01-01T08:00:00Z',
+		updatedAt: '2025-01-01T08:00:00Z'
 	}
 ];
 
