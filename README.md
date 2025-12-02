@@ -248,7 +248,7 @@ CMMS POC is a full-featured **Computerized Maintenance Management System** desig
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/cmms-demo.git
+git clone https://github.com/radinaldhs/cmms-demo.git
 cd cmms-demo
 
 # Install dependencies
@@ -994,16 +994,17 @@ This project is a **Proof of Concept (POC)** for demonstration purposes.
 
 **Not for production use** without proper backend integration, security hardening, and testing.
 
-For commercial licensing inquiries, please contact [your-email@example.com](mailto:your-email@example.com)
+For commercial licensing inquiries, please contact [radinaldewantara@gmail.com](mailto:radinaldewantara@gmail.com)
 
 ---
 
 ## 📞 Contact & Support
 
-- **Project Maintainer**: [Your Name](https://github.com/yourusername)
-- **Email**: your-email@example.com
-- **Issues**: [GitHub Issues](https://github.com/yourusername/cmms-demo/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/cmms-demo/discussions)
+- **Project Maintainer**: [Radinal Dewantara](https://github.com/radinaldhs)
+- **Email**: radinaldewantara@gmail.com
+- **Phone**: +6289671313329
+- **Issues**: [GitHub Issues](https://github.com/radinaldhs/cmms-demo/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/radinaldhs/cmms-demo/discussions)
 
 ---
 
